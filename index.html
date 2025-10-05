@@ -881,13 +881,23 @@
     async update() {
       try {
         const lang = this.languageManager.getLang();
-        const response = await fetch(
-          `https://wttr.in/${this.city}?format=%C+%t&lang=${lang}`
-        );
+        const cityQuery = encodeURIComponent(this.city);
+        const coordsQuery = '55.0282215,82.9234476'; // Novosibirsk fallback
 
+        // First try by city name
+        let response = await fetch(`https://wttr.in/${cityQuery}?format=%C+%t&lang=${lang}`);
         if (!response.ok) throw new Error('Weather API unavailable');
 
-        const data = await response.text();
+        let data = await response.text();
+
+        // wttr.in returns 200 with text like: "Unknown location; please try ..."
+        if (data.toLowerCase().includes('unknown location')) {
+          // Retry with coordinates
+          response = await fetch(`https://wttr.in/${coordsQuery}?format=%C+%t&lang=${lang}`);
+          if (!response.ok) throw new Error('Weather API unavailable (coords)');
+          data = await response.text();
+        }
+
         const parts = data.trim().split(' ');
         const temp = parts[parts.length - 1];
         const condition = parts.slice(0, -1).join(' ');
