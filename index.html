@@ -766,7 +766,7 @@
         <span class="code-keyword">const</span> skills = [<br>
         &nbsp;&nbsp;<span class="code-string">"Minecraft mods"</span>,<br>
         &nbsp;&nbsp;<span class="code-string">"Pixelarts"</span>,<br>
-        &nbsp;&nbsp;<span class="code-string">"Plugins"</span><br>
+        &nbsp;&nbsp;<span class="code-string">"Design"</span><br>
         ];
       </div>
 
@@ -879,40 +879,51 @@
     }
 
     async update() {
-      try {
-        const lang = this.languageManager.getLang();
-        const cityQuery = encodeURIComponent(this.city);
-        const coordsQuery = '55.0282215,82.9234476'; // Novosibirsk fallback
-
-        // First try by city name
-        let response = await fetch(`https://wttr.in/${cityQuery}?format=%C+%t&lang=${lang}`);
-        if (!response.ok) throw new Error('Weather API unavailable');
-
-        let data = await response.text();
-
-        // wttr.in returns 200 with text like: "Unknown location; please try ..."
-        if (data.toLowerCase().includes('unknown location')) {
-          // Retry with coordinates
-          response = await fetch(`https://wttr.in/${coordsQuery}?format=%C+%t&lang=${lang}`);
-          if (!response.ok) throw new Error('Weather API unavailable (coords)');
-          data = await response.text();
-        }
-
-        const parts = data.trim().split(' ');
-        const temp = parts[parts.length - 1];
-        const condition = parts.slice(0, -1).join(' ');
-
-        const emoji = this.getEmoji(condition, lang);
-
-        this.render(emoji, `${condition} ${temp}`);
-      } catch (error) {
-        console.log('Weather API error:', error.message);
-        const fallback = this.languageManager.getLang() === 'ru'
-          ? 'Ясно 10°C'
-          : 'Clear 10°C';
-        this.render('🌤️', fallback);
-      }
-    }
+  try {
+    const lang = this.languageManager.getLang();
+    const langCode = lang === 'ru' ? 'ru' : 'en';
+    
+    // Coordinates for Novosibirsk
+    const lat = 55.0415;
+    const lon = 82.9346;
+    
+    // Using Open-Meteo (free, no API key needed)
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`;
+    
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Weather API error');
+    
+    const data = await response.json();
+    const temp = Math.round(data.current.temperature_2m);
+    const weatherCode = data.current.weather_code;
+    
+    // Weather codes: https://open-meteo.com/en/docs
+    const conditions = {
+      0: lang === 'ru' ? 'Ясно' : 'Clear',
+      1: lang === 'ru' ? 'Малооблачно' : 'Mainly Clear',
+      2: lang === 'ru' ? 'Облачно' : 'Partly Cloudy',
+      3: lang === 'ru' ? 'Пасмурно' : 'Overcast',
+      45: lang === 'ru' ? 'Туман' : 'Foggy',
+      48: lang === 'ru' ? 'Туман' : 'Foggy',
+      51: lang === 'ru' ? 'Морось' : 'Drizzle',
+      61: lang === 'ru' ? 'Дождь' : 'Rain',
+      71: lang === 'ru' ? 'Снег' : 'Snow',
+      95: lang === 'ru' ? 'Гроза' : 'Thunderstorm'
+    };
+    
+    const condition = conditions[weatherCode] || (lang === 'ru' ? 'Облачно' : 'Cloudy');
+    const emoji = this.getEmoji(condition, lang);
+    
+    this.render(emoji, `${condition} ${temp}°C`);
+    
+  } catch (error) {
+    console.error('Weather error:', error);
+    const fallback = this.languageManager.getLang() === 'ru' 
+      ? 'Погода недоступна' 
+      : 'Weather unavailable';
+    this.render('❌', fallback);
+  }
+}
 
     render(emoji, text) {
       document.getElementById('weather-emoji').textContent = emoji;
