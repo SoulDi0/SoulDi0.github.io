@@ -692,6 +692,116 @@
     gap: 10px;
   }
 
+  .testimonials-section {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-top: 60px;
+  }
+
+  .testimonials-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .testimonials-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #dcddde;
+    margin-bottom: 10px;
+  }
+
+  .testimonials-subtitle {
+    font-size: 16px;
+    color: #bfbad8;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+  }
+
+  .testimonial-card {
+    background: #0e101de6;
+    border: 1px solid #191927;
+    border-radius: 12px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+    border-color: #5a59b9;
+    box-shadow: 0 10px 30px rgba(90, 89, 185, 0.3);
+  }
+
+  .testimonial-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5a59b9, #7b5fc7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .testimonial-info {
+    flex: 1;
+  }
+
+  .testimonial-info h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #dcddde;
+    margin-bottom: 8px;
+  }
+
+  .testimonial-rating {
+    display: flex;
+    gap: 2px;
+  }
+
+  .star {
+    color: #ffd700;
+    font-size: 16px;
+    transition: all 0.2s ease;
+  }
+
+  .star:hover {
+    transform: scale(1.1);
+  }
+
+  .testimonial-content {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #dcddde;
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .testimonials-title {
+      font-size: 28px;
+    }
+  }
+
   .search-btn {
     background: linear-gradient(135deg, #5a59b9 0%, #7b5fc7 100%);
     color: white;
@@ -1120,7 +1230,29 @@
         </div>
       </div>
 
-
+      <div class="project-card" data-category="pixelart" data-tags="512x512">
+        <div class="project-image" style="background-image: url('fire.png'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+        <div class="project-content">
+          <span class="project-category" data-en="Pixel Art" data-ru="Пиксель Арт">Pixel Art</span>
+            <h3 class="project-title" data-en="Fire background" data-ru="Фоновый огонь">Fire background</h3>
+            <p class="project-description" data-en="Pixelart for background in mod menu" data-ru="Пиксельарт для фона в меню мода">Pixelart for background in mod menu</p>
+          <div class="project-tags">
+            <span class="project-tag">512x512</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card" data-category="pixelart" data-tags="512x512">
+        <div class="project-image" style="background-image: url('clouds.png'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+        <div class="project-content">
+          <span class="project-category" data-en="Pixel Art" data-ru="Пиксель Арт">Pixel Art</span>
+            <h3 class="project-title" data-en="Clouds background" data-ru="Фоновые облака">Clouds background</h3>
+            <p class="project-description" data-en="Pixelart for background in mod menu" data-ru="Пиксельарт для фона в меню мода">Pixelart for background in mod menu</p>
+          <div class="project-tags">
+            <span class="project-tag">512x512</span>
+          </div>
+        </div>
+      </div>
 
 
 
@@ -1153,9 +1285,62 @@
 
 
     </div>
+    <div class="testimonials-section">
+      <div class="testimonials-header">
+        <h2 class="testimonials-title" data-en="Testimonials" data-ru="Отзывы">Testimonials</h2>
+        <p class="testimonials-subtitle" data-en="What people say about my work" data-ru="Что говорят о моей работе">What people say about my work</p>
+      </div>
+      
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">C</div>
+            <div class="testimonial-info">
+              <h4>Chiskey</h4>
+              <div class="testimonial-rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-content" data-en="SoulDi created amazing pixel art for my Minecraft mod. The attention to detail and creativity exceeded my expectations. Highly recommended!" data-ru="SoulDi создал потрясающий пиксель-арт для моего мода Minecraft. Внимание к деталям и креативность превзошли мои ожидания. Очень рекомендую!">
+            "SoulDi created amazing pixel art for my Minecraft mod. The attention to detail and creativity exceeded my expectations. Highly recommended!"
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">J</div>
+            <div class="testimonial-info">
+              <h4>justgreatfox</h4>
+              <div class="testimonial-rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-content" data-en="The mod development work was outstanding. Clean code, 
+          great documentation, and exactly what we needed for our server.The mod development work was outstanding. Clean code, 
+          great documentation, and exactly what we needed for our server.The mod development work was outstanding. Clean code, 
+          great documentation, and exactly what we needed for our server." data-ru="Работа по разработке мода была выдающейся. Чистый код, отличная документация и именно то, что нам было нужно для нашего сервера.">
+            "The mod development work was outstanding. Clean code, great documentation, and exactly what we needed for our server."
+          </div>
+        </div>
+
+        
+        
+       
+      </div>
+    </div>
+
     <div class="page-bottom-spacer"></div>
   </div>
-
 
 </div>
 
